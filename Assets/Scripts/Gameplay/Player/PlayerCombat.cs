@@ -16,6 +16,11 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private KeyCode _skill2Key;
     [SerializeField] private KeyCode _skill3Key;
 
+    [Header("Cooldown")]
+    [SerializeField] private float _skill1cooldown;
+    [SerializeField] private float _skill2cooldown;
+    [SerializeField] private float _skill3cooldown;
+
     private Animator _anim;
 
     void Start()
@@ -41,6 +46,19 @@ public class PlayerCombat : MonoBehaviour
         {
             WallSkill();
         }
+
+        if (_skill1cooldown > 0)
+        {
+            _skill1cooldown -= Time.deltaTime;
+        }
+        if (_skill2cooldown > 0)
+        {
+            _skill2cooldown -= Time.deltaTime;
+        }
+        if (_skill3cooldown > 0)
+        {
+            _skill3cooldown -= Time.deltaTime;
+        }
     }
     
     void Attack(string name)
@@ -63,15 +81,18 @@ public class PlayerCombat : MonoBehaviour
 
     public void BallSkill()
     {
+        if (_skill1cooldown > 0) return;
         //assign element
-        GameObject GO = Instantiate(SkillManager.instance.GetBall(SkillManager.Elements.Fire), _hitbox.position, _hitbox.rotation);       
+        GameObject GO = Instantiate(SkillManager.instance.GetBall(SkillManager.Elements.Fire), _hitbox.position, _hitbox.rotation);
+        _skill1cooldown = 10;
     }
 
     public void WaveSkill()
     {
+        if (_skill2cooldown > 0) return;
         //assign element
+
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, 15f, _targetMask);
-        Action status = null;
 
         if (rangeChecks.Length != 0)
         {
@@ -83,13 +104,16 @@ public class PlayerCombat : MonoBehaviour
             }
         }
         //GameObject GO = Instantiate(SkillManager.instance.GetWave(SkillManager.Elements.Fire));
+        _skill2cooldown = 10;
     }
 
     public void WallSkill()
     {
+        if (_skill3cooldown > 0) return;
         //assign element
         Vector3 spawnPos = this.transform.position + this.transform.forward * 10f;
         spawnPos.y = 2.3f;
         GameObject GO = Instantiate(SkillManager.instance.GetWall(SkillManager.Elements.Fire), spawnPos, this.transform.rotation);
+        _skill3cooldown = 10;
     }
 }
