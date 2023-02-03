@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private Transform _hitbox;
+    [SerializeField] private LayerMask _targetMask;
 
     [Header("Player Status")]
     [SerializeField] private float _atk;
@@ -30,6 +32,14 @@ public class PlayerCombat : MonoBehaviour
         if (Input.GetKeyDown(_skill1Key))
         {
             BallSkill();
+        }
+        if (Input.GetKeyDown(_skill2Key))
+        {
+            WaveSkill();
+        }
+        if (Input.GetKeyDown(_skill3Key))
+        {
+            WallSkill();
         }
     }
     
@@ -60,13 +70,26 @@ public class PlayerCombat : MonoBehaviour
     public void WaveSkill()
     {
         //assign element
-        //2 second duration
-        GameObject GO = Instantiate(SkillManager.instance.GetWave(SkillManager.Elements.Fire));
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, 15f, _targetMask);
+        Action status = null;
+
+        if (rangeChecks.Length != 0)
+        {
+            foreach (var enemy in rangeChecks)
+            {
+                var enemyManager = enemy.GetComponent<EnemyManager>();
+                enemyManager.TakeDamage(1);
+                
+            }
+        }
+        //GameObject GO = Instantiate(SkillManager.instance.GetWave(SkillManager.Elements.Fire));
     }
 
     public void WallSkill()
     {
         //assign element
-        GameObject GO = Instantiate(SkillManager.instance.GetWall(SkillManager.Elements.Fire));
+        Vector3 spawnPos = this.transform.position + this.transform.forward * 10f;
+        spawnPos.y = 2.3f;
+        GameObject GO = Instantiate(SkillManager.instance.GetWall(SkillManager.Elements.Fire), spawnPos, this.transform.rotation);
     }
 }

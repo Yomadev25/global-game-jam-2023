@@ -5,6 +5,13 @@ using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
 {
+    public enum Status
+    {
+        None,
+        Burn,
+        Slow
+    }
+
     [SerializeField] private float _maxHp;
     [SerializeField] private float _hp;
 
@@ -27,6 +34,47 @@ public class EnemyManager : MonoBehaviour
     {
         _hp -= damage;
         onTakeDamage?.Invoke();
+    }
+
+    public void TakeStatus(Status status)
+    {
+        switch (status)
+        {
+            case Status.Burn:
+                StopCoroutine(BurnCoroutine());
+                StartCoroutine(BurnCoroutine());
+                break;
+            case Status.Slow:
+                StopCoroutine(SlowCoroutine());
+                StartCoroutine(SlowCoroutine());
+                break;
+        }
+    }
+
+    IEnumerator BurnCoroutine()
+    {
+        float duration = 2f;
+
+        while (duration > 0)
+        {
+            _hp -= 0.2f;
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+         
+    }
+
+    IEnumerator SlowCoroutine()
+    {
+        float duration = 2f;
+
+        while (duration > 0)
+        {
+            //slow
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+        
     }
 
     void Death()

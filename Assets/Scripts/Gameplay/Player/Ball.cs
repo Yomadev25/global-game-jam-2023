@@ -6,12 +6,31 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _liveDuration = 5f;
+    [SerializeField] private SkillManager.Elements _element;
 
     [SerializeField] private string targetTag;
 
+    private float _damage;
+
     private void Start()
     {
-        Destroy(gameObject, 5f);
+        switch (_element)
+        {
+            case SkillManager.Elements.None:
+                _damage = 1;
+                break;
+            case SkillManager.Elements.Fire:
+                _damage = 2;
+                break;
+            case SkillManager.Elements.Thunder:
+                _damage = 2;
+                break;
+            case SkillManager.Elements.Earth:
+                _damage = 2;
+                break;
+        }
+
+        Destroy(gameObject, _liveDuration);
     }
 
     void Update()
@@ -26,15 +45,14 @@ public class Ball : MonoBehaviour
             switch (targetTag)
             {
                 case "Player":
-                    return;
-                case "Enemy":
+                    break;
+                case "Enemy":                   
                     var enemyManager = other.GetComponent<EnemyManager>();
-                    enemyManager.TakeDamage(1);
-                    return;
-            }
-
-            //play effect
-            Destroy(this.gameObject);
+                    enemyManager.TakeDamage(_damage);
+                    //take status
+                    break;
+            }            
         }
+        Destroy(this.gameObject);
     }
 }
