@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public const string MessageGameStart = "Game Start";
+    public static GameManager instance;
+
+    [SerializeField] private GameObject _randomSkill;
+
+    private void Awake()
     {
-        
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        Transition.Instance.FadeOut();
+        RandomSkill();
+    }
+
+    void RandomSkill()
+    {
+        _randomSkill.SetActive(true);
+    }
+
+    public void GameStart()
+    {
+        MessagingCenter.Send(this, MessageGameStart);
+    }
+
+    public void GameCompleted()
+    {
+        SkillUnlock();
+    }
+
+    void SkillUnlock()
+    {
+        _randomSkill.GetComponent<SkillRandom>().UnlockSkill();
     }
 }

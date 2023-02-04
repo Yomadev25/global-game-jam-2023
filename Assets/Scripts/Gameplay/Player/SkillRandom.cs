@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SkillRandom : MonoBehaviour
 {
     [SerializeField] private GameObject _skill1UI;
     [SerializeField] private GameObject _skill2UI;
+    [SerializeField] private string scenename;
 
     int skillRandom1 = 0;
     int skillRandom2 = 0;
@@ -62,14 +64,17 @@ public class SkillRandom : MonoBehaviour
 
     public void SelectSkill(int index)
     {
-        skillSelect = index;
-        //Deactive Canvas
-        //Game Start
+        skillSelect = index;       
+        GameManager.instance.GameStart();
+        this.gameObject.SetActive(false);
     }
 
     public void UnlockSkill()
     {
         SkillManager.instance.GetSkillData().SkillUnlocks[skillSelect] = true;
-        //Scene Change
+        Transition.Instance.FadeIn(() =>
+        {
+            SceneManager.LoadScene("Gameplay");
+        });
     }
 }
