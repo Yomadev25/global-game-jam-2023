@@ -71,10 +71,6 @@ public class SkillRandom : MonoBehaviour
 
     public void UnlockSkill()
     {
-        SkillManager.instance.GetSkillData().SkillUnlocks[skillSelect] = true;
-        Transition.Instance.FadeIn(() =>
-        {
-            SceneManager.LoadScene("Gameplay");
-        });
+        SkillManager.instance.GetSkillData().SkillUnlocks[skillSelect] = true;        
     }
 }

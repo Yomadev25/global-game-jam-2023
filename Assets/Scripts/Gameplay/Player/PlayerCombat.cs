@@ -100,6 +100,10 @@ public class PlayerCombat : MonoBehaviour
         {
             element = SkillManager.Elements.Earth;
         }
+        else
+        {
+            element = SkillManager.Elements.None;
+        }
 
         GameObject GO = Instantiate(SkillManager.instance.GetBall(element), _hitbox.position, _hitbox.rotation);
         _skill1cooldown = 10;

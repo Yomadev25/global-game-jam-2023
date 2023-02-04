@@ -43,9 +43,13 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        _skill1Icon.sprite = sprites[0];
-        _skill2Icon.sprite = sprites[1];
-        _skill3Icon.sprite = sprites[2];
+        if (sprites.Count > 0)
+        {
+            _skill1Icon.sprite = sprites[0];
+            _skill2Icon.sprite = sprites[1];
+            _skill3Icon.sprite = sprites[2];
+        }
+        
     }
 
     public void UpdateHpBar()

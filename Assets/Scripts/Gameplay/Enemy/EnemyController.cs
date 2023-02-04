@@ -184,11 +184,10 @@ public class EnemyController : MonoBehaviour
         var direction = targetObj.position - transform.position;
         direction.y = 0;
         transform.forward = direction;
-
-        yield return new WaitForSeconds(0.5f);
-        //Attack Animation
+        _anim.SetTrigger("Shoot");
+        yield return new WaitForSeconds(0.7f);
         GameObject GO = Instantiate(_ballPrefab, _hitboxPos.transform.position, this.transform.rotation);
-        //Attack
+        yield return new WaitForSeconds(1f);
 
         _agent.isStopped = false;
         AIStateChange(State.IDLE);

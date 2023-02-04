@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private GameObject _randomSkill;
+    [SerializeField] private string _sceneName;
+
+    int enemyCount;
+    int enemyKilledCount;
 
     private void Awake()
     {
@@ -21,11 +26,26 @@ public class GameManager : MonoBehaviour
     {
         Transition.Instance.FadeOut();
         RandomSkill();
+
+        enemyCount = FindObjectsOfType<EnemyManager>().Length;
     }
 
     void RandomSkill()
     {
-        _randomSkill.SetActive(true);
+        if (_randomSkill != null)
+            _randomSkill.SetActive(true);
+        else
+            GameStart();
+    }
+
+    public void OnEnemyKilled()
+    {
+        enemyKilledCount++;
+
+        if(enemyKilledCount >= enemyCount)
+        {
+            GameCompleted();
+        }
     }
 
     public void GameStart()
@@ -36,10 +56,18 @@ public class GameManager : MonoBehaviour
     public void GameCompleted()
     {
         SkillUnlock();
+
+        Transition.Instance.FadeIn(() =>
+        {
+            SceneManager.LoadScene(_sceneName);
+        });
     }
 
     void SkillUnlock()
     {
-        _randomSkill.GetComponent<SkillRandom>().UnlockSkill();
+        if (_randomSkill != null)
+        {
+            _randomSkill.GetComponent<SkillRandom>().UnlockSkill();
+        }
     }
 }
