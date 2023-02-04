@@ -18,8 +18,20 @@ public class EnemyManager : MonoBehaviour
     public UnityEvent onTakeDamage;
     public UnityEvent onDeath;
 
+    [SerializeField] private GameObject _mesh;
+    private SkinnedMeshRenderer _meshRenderer;
+    private List<Color> originalColor = new List<Color>();
+
+    [SerializeField] private GameObject _dieFx;
+
     void Start()
     {
+        _meshRenderer = _mesh.GetComponent<SkinnedMeshRenderer>();
+        foreach (var material in _meshRenderer.materials)
+        {
+            originalColor.Add(material.color);
+        }
+
         _hp = _maxHp;
     }
 
@@ -34,7 +46,24 @@ public class EnemyManager : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _hp -= damage;
+        StartCoroutine(DamageEffect());
+
         onTakeDamage?.Invoke();
+    }
+
+    IEnumerator DamageEffect()
+    {
+        for (int i = 0; i < _meshRenderer.materials.Length; i++)
+        {
+            _meshRenderer.materials[i].color = Color.red;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < _meshRenderer.materials.Length; i++)
+        {
+            _meshRenderer.materials[i].color = originalColor[i];
+        }
     }
 
     public void TakeStatus(Status status)
@@ -80,6 +109,7 @@ public class EnemyManager : MonoBehaviour
 
     void Death()
     {
+        Instantiate(_dieFx, this.transform.position, Quaternion.identity);
         onDeath?.Invoke();
         Destroy(this.gameObject);
     }

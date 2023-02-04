@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -26,9 +27,56 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] private ParticleSystem _slashEffect;
 
+    public enum Types { Ball, Wave, Wall }
+    public List<Types> types = new List<Types>();
+
     void Start()
     {
-        
+        SkillSetup();
+    }
+
+    void SkillSetup()
+    {
+        Types type = Types.Ball;
+
+        for (int i = 0; i < SkillManager.instance.GetSkillIndexLength(); i++)
+        {
+            if (SkillManager.instance.GetSkillData().SkillUnlocks[i])
+            {
+                switch (i)
+                {
+                    case 0:
+                        type = Types.Ball;
+                        break; 
+                    case 1:    
+                        type = Types.Wave;
+                        break; 
+                    case 2:    
+                        type = Types.Wall;
+                        break; 
+                    case 3:    
+                        type = Types.Ball;
+                        break; 
+                    case 4:    
+                        type = Types.Wave;
+                        break; 
+                    case 5:    
+                        type = Types.Wall;
+                        break; 
+                    case 6:    
+                        type = Types.Ball;
+                        break; 
+                    case 7:    
+                        type = Types.Wave;
+                        break; 
+                    case 8:    
+                        type = Types.Wall;
+                        break;
+                }
+
+                types.Add(type);
+            }
+        }
     }
 
     void Update()
@@ -39,15 +87,15 @@ public class PlayerCombat : MonoBehaviour
         }
         if (Input.GetKeyDown(_skill1Key))
         {
-            BallSkill();
+            OnSkill(types[0]);
         }
         if (Input.GetKeyDown(_skill2Key))
         {
-            WaveSkill();
+            OnSkill(types[1]);
         }
         if (Input.GetKeyDown(_skill3Key))
         {
-            WallSkill();
+            OnSkill(types[2]);
         }
 
         if (_skill1cooldown > 0)
@@ -83,6 +131,22 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    void OnSkill(Types skillType)
+    {
+        if (skillType == Types.Ball)
+        {
+            BallSkill();
+        }
+        else if (skillType == Types.Wave)
+        {
+            WaveSkill();
+        }
+        else if (skillType == Types.Wall)
+        {
+            WallSkill();
+        }
+    }
+
     public void BallSkill()
     {
         if (_skill1cooldown > 0) return;
@@ -107,6 +171,8 @@ public class PlayerCombat : MonoBehaviour
 
         GameObject GO = Instantiate(SkillManager.instance.GetBall(element), _hitbox.position, _hitbox.rotation);
         _skill1cooldown = 10;
+
+        _leftAnim.Play("Attack");
     }
 
     public void WaveSkill()
@@ -149,6 +215,8 @@ public class PlayerCombat : MonoBehaviour
         GameObject GO = Instantiate(SkillManager.instance.GetWave(element), this.transform.position, Quaternion.identity);
         Destroy(GO, 1);
         _skill2cooldown = 10;
+
+        _leftAnim.Play("Attack");
     }
 
     public void WallSkill()
@@ -173,5 +241,9 @@ public class PlayerCombat : MonoBehaviour
         spawnPos.y = 2.3f;
         GameObject GO = Instantiate(SkillManager.instance.GetWall(element), spawnPos, this.transform.rotation);
         _skill3cooldown = 10;
+
+        _leftAnim.Play("Attack");
     }
 }
+
+

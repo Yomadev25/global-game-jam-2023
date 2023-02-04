@@ -9,6 +9,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private SkillManager.Elements _element;
 
     [SerializeField] private string targetTag;
+    [SerializeField] private GameObject _destroyFx;
 
     private float _damage;
 
@@ -55,6 +56,7 @@ public class Ball : MonoBehaviour
                     break;
             }            
         }
+        Instantiate(_destroyFx, this.transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 }

@@ -839,7 +839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 4561814073623885376}
   _skillData:
-    SkillUnlocks: 000001010000000100
+    SkillUnlocks: 010000000001000100
   _fireBallUI: {fileID: 4561814071757849458}
   _fireWaveUI: {fileID: 4561814071820917233}
   _fireWallUI: {fileID: 4561814072791335962}
@@ -855,13 +855,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3ab20878188ec8548b1df7f135768a23, type: 3}
   - {fileID: 21300000, guid: 2e3014c079a331b438595ec1572ffea9, type: 3}
   - {fileID: 21300000, guid: 5fadcaea17a00b44bab5b2959ddb257b, type: 3}
-  - {fileID: 21300000, guid: 9da9bf1b012e23c4e8ed7e8aac4c2dc7, type: 3}
+  - {fileID: 21300000, guid: e3e282df5e04a1646a17f2917abf02cf, type: 3}
   - {fileID: 21300000, guid: edc62d713e5f22043a97b3964d6c2bd6, type: 3}
   - {fileID: 21300000, guid: 24914f3a6a91b324b8b8efeb83ee0cf4, type: 3}
   - {fileID: 21300000, guid: 8676d4cf6927f684bbcc32b1128c68cc, type: 3}
   _fireBall: {fileID: 2051742228168392496, guid: d09f19c218ffe4b4f9dcdc1329453598,
     type: 3}
-  _fireWave: {fileID: 0}
+  _fireWave: {fileID: 1005761546636580245, guid: 2c8d3329e887ad34d81f921835352992,
+    type: 3}
   _fireWall: {fileID: 1989911262224351423, guid: 96d7c81d216b22a4a8a26f61c7f462d9,
     type: 3}
   _thunderBall: {fileID: 5642035295898110332, guid: 90e9cdd231898ae4a875b82cc4f824ef,
@@ -872,7 +873,8 @@ MonoBehaviour:
     type: 3}
   _earthBall: {fileID: 3052975988744806554, guid: ef35a39fcd08149419b5c6d8214a2453,
     type: 3}
-  _earthWave: {fileID: 0}
+  _earthWave: {fileID: 8972816548872328876, guid: 4efb42649fd23ed4fb0ed9f4d9346c21,
+    type: 3}
   _earthWall: {fileID: 1114702398513473908, guid: 010655eaa821c3e4a9a028c149ab7abb,
     type: 3}
 --- !u!1 &4561814073293176225
