@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Image _hpBar;
     [SerializeField] private Image _staminaBar;
+    [SerializeField] private GameObject _damageFx;
 
     [Header("Skill Panel")]
     [SerializeField] private Image _skill1Icon;
@@ -60,5 +61,14 @@ public class UIManager : MonoBehaviour
     public void UpdateStaminaBar()
     {
         _staminaBar.fillAmount = playerManager.Stamina / playerManager.MaxStamina;
+    }
+
+    public void DamageEffect() => StartCoroutine(DamageEffectCoroutine());
+
+    IEnumerator DamageEffectCoroutine()
+    {
+        _damageFx.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        _damageFx.SetActive(false);
     }
 }

@@ -78,7 +78,7 @@ public class PlayerManager : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _hp -= damage;
-        //effect
+        UIManager.instance.DamageEffect();
     }
 
     public void Gameover()
