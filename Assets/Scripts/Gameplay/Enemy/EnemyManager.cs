@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float _hp;
 
     public UnityEvent onTakeDamage;
+    public UnityEvent onDeath;
 
     void Start()
     {
@@ -57,7 +58,7 @@ public class EnemyManager : MonoBehaviour
 
         while (duration > 0)
         {
-            _hp -= 0.2f;
+            _hp -= 0.01f;
             duration -= Time.deltaTime;
             yield return null;
         }
@@ -79,6 +80,7 @@ public class EnemyManager : MonoBehaviour
 
     void Death()
     {
+        onDeath?.Invoke();
         Destroy(this.gameObject);
     }
 }

@@ -1,5 +1,7 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -14,10 +16,34 @@ public class PlayerManager : MonoBehaviour
     public float Stamina => _stamina;
     public float MaxStamina => _maxStamina;
 
+    public bool isUseStamina;
+
+    private FirstPersonController _firstPersonController;
+
+    private void Awake()
+    {
+        MessagingCenter.Subscribe<GameManager>(this, GameManager.MessageGameStart, (sender) =>
+        {
+            PlayerActive();
+        });
+    }
+
     void Start()
     {
+        _firstPersonController = GetComponent<FirstPersonController>();
+        _firstPersonController.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         _hp = _maxHp;
         _stamina = _maxStamina;
+    }
+
+    void PlayerActive()
+    {
+        _firstPersonController.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -28,6 +54,24 @@ public class PlayerManager : MonoBehaviour
         if (_hp <= 0)
         {
             Gameover();
+        }
+
+        if (isUseStamina)
+        {
+            _stamina -= Time.deltaTime * 3;
+        }
+        else
+        {
+            _stamina += Time.deltaTime;
+        }
+
+        if (_stamina <= 0)
+        {
+            _stamina = 0;
+        }
+        if (_stamina >= _maxStamina)
+        {
+            _stamina = _maxStamina;
         }
     }
 

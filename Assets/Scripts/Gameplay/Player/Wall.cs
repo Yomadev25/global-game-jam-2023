@@ -16,13 +16,13 @@ public class Wall : MonoBehaviour
         switch (_element)
         {
             case SkillManager.Elements.Fire:
-                _boxCollider.isTrigger = false;
+                _boxCollider.isTrigger = true;
                 break;
             case SkillManager.Elements.Thunder:
-                _boxCollider.isTrigger = false;
+                _boxCollider.isTrigger = true;
                 break;
             case SkillManager.Elements.Earth:
-                _boxCollider.isTrigger = true;
+                _boxCollider.isTrigger = false;
                 this.AddComponent<NavMeshObstacle>();
                 break;
         }
@@ -35,7 +35,7 @@ public class Wall : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             var enemyManager = other.GetComponent<EnemyManager>();
-            
+            Debug.Log("Collide with wall");
             switch (_element)
             {
                 case SkillManager.Elements.Fire:

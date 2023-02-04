@@ -44,9 +44,11 @@ public class Ball : MonoBehaviour
         {
             switch (targetTag)
             {
-                case "Player":
+                case "Player" :
+                    var playerManager = other.GetComponent<PlayerManager>();
+                    playerManager.TakeDamage(_damage);
                     break;
-                case "Enemy":                   
+                case "Enemy" :                   
                     var enemyManager = other.GetComponent<EnemyManager>();
                     enemyManager.TakeDamage(_damage);
                     //take status

@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _timeBtwAttack;
     private float _cooldownAttack = 0;
     [HideInInspector] public Transform targetObj;
+    [SerializeField] private Transform _hitboxPos;
+    [SerializeField] private GameObject _ballPrefab;
 
     [Header("ANIMATION")]
     [SerializeField] private Animator _anim;
@@ -52,8 +54,6 @@ public class EnemyController : MonoBehaviour
             _cooldownAttack -= Time.deltaTime;
             canAttack = false;
         }
-
-        CheckIsLongerAttack();
     }
 
     void AIStateChange(State newState)
@@ -83,7 +83,7 @@ public class EnemyController : MonoBehaviour
         if (_currentState != State.IDLE) return;
 
         EnemyCheck();
-        //Idle Animation
+        _anim.SetBool("isRun", false);
     }
 
     void PatrolBeforeAttack()
@@ -109,9 +109,9 @@ public class EnemyController : MonoBehaviour
                     _agent.destination = targetObj.position;
                 }
 
-                if (_agent.remainingDistance < 2 && canAttack)
+                if (_agent.remainingDistance < 5 && canAttack)
                 {
-                    Attack();
+                    StartCoroutine(AttackCoroutine());
                     break;
                 }
             }
@@ -123,16 +123,42 @@ public class EnemyController : MonoBehaviour
             if (_agent.remainingDistance < 2)
             {
                 _agent.isStopped = true;
-                //Idle Animation
+                _anim.SetBool("isRun", false);
             }
             else
             {
                 _agent.isStopped = false;
-                //Run Animation
+                _anim.SetBool("isRun", true);
             }
 
             yield return null;
         }
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        _agent.isStopped = true;
+        _anim.SetBool("isRun", false);
+        var direction = targetObj.position - transform.position;
+        direction.y = 0;
+        transform.forward = direction;
+        yield return new WaitForSeconds(0.5f);
+        _anim.SetBool("isAttack", true);       
+        yield return new WaitForSeconds(1f);
+        foreach (Collider col in Physics.OverlapBox(_hitboxPos.position, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity))
+        {
+            if (col.CompareTag("Player"))
+            {
+                var playerManager = col.GetComponent<PlayerManager>();
+                playerManager.TakeDamage(1);
+            }
+        }
+        _anim.SetBool("isAttack", false);
+
+        yield return new WaitForSeconds(1f);
+        _agent.isStopped = false;
+        AIStateChange(State.IDLE);
+        _cooldownAttack = _timeBtwAttack;
     }
 
     IEnumerator RangePatrolCoroutine()
@@ -145,7 +171,7 @@ public class EnemyController : MonoBehaviour
 
             while (Time.time < startTime + 1.5f)
             {
-                //Run Animation
+                _anim.SetBool("isRun", true);
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(movementDirection.x, 0, movementDirection.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
                 _agent.Move(movementDirection.normalized * 5f * Time.deltaTime);
@@ -154,8 +180,18 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        isAttack = true;
-        OnAttack?.Invoke();
+        _agent.isStopped = true;
+        var direction = targetObj.position - transform.position;
+        direction.y = 0;
+        transform.forward = direction;
+
+        yield return new WaitForSeconds(0.5f);
+        //Attack Animation
+        GameObject GO = Instantiate(_ballPrefab, _hitboxPos.transform.position, this.transform.rotation);
+        //Attack
+
+        _agent.isStopped = false;
+        AIStateChange(State.IDLE);
     }
 
     void Attack()
@@ -178,39 +214,9 @@ public class EnemyController : MonoBehaviour
         OnAttack?.Invoke();
     }
 
-    public void Death()
-    {
-        if (isDeath) return;
-        isDeath = true;
-        _agent.isStopped = true;
-        StopAllCoroutines();
-
-        //die animation
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(this.transform.position, _radius);
-    }
-
-    void CheckIsLongerAttack()
-    {
-        if (isAttack)
-        {
-            if (isAttackCooldown > 0)
-            {
-                isAttackCooldown -= Time.deltaTime;
-            }
-            else
-            {
-                isAttackCooldown = 3f;
-                isAttack = false;
-            }
-        }
-        else
-        {
-            isAttackCooldown = 3f;
-        }
     }
 }

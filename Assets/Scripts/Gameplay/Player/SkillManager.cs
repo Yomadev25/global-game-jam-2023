@@ -33,6 +33,9 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Image _earthWaveUI;
     [SerializeField] private Image _earthWallUI;
 
+    [Header("Skill Sprites")]
+    [SerializeField] private Sprite[] _skillSprites;
+
     [Header("Fire Prefabs")]
     [SerializeField] private GameObject _fireBall;
     [SerializeField] private GameObject _fireWave;
@@ -127,6 +130,11 @@ public class SkillManager : MonoBehaviour
     public SkillData GetSkillData()
     {
         return _skillData;
+    }
+
+    public Sprite GetSkillSprite(int index)
+    {
+        return _skillSprites[index];
     }
 }
 
