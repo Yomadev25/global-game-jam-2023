@@ -6,13 +6,24 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private string scene;
 
+    private void Start()
+    {
+        Transition.Instance.FadeOut();
+    }
+
     public void Play()
     {
-        SceneManager.LoadScene(scene);
+        Transition.Instance.FadeIn(() =>
+        {
+            SceneManager.LoadScene(scene);
+        });      
     }
 
     public void Exit()
     {
-        Application.Quit();
+        Transition.Instance.FadeIn(() =>
+        {
+            Application.Quit();
+        });
     }
 }

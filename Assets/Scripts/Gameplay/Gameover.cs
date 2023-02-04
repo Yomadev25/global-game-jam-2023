@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,11 @@ public class Gameover : MonoBehaviour
         canvas.blocksRaycasts = true;
         canvas.interactable = true;
         canvas.LeanAlpha(1, 2);
+
+        var player = FindObjectOfType<FirstPersonController>();
+        player.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         ActiveSkillTree();
     }

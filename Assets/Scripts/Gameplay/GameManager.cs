@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private GameObject _randomSkill;
+    [SerializeField] private Gameover _gameover;
     [SerializeField] private string _sceneName;
 
     int enemyCount;
@@ -69,5 +70,11 @@ public class GameManager : MonoBehaviour
         {
             _randomSkill.GetComponent<SkillRandom>().UnlockSkill();
         }
+    }
+
+    public void GameEnd()
+    {
+        if (_gameover != null)
+            _gameover.gameObject.SetActive(true);
     }
 }
