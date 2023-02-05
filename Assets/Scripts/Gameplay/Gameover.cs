@@ -27,6 +27,7 @@ public class Gameover : MonoBehaviour
     [SerializeField] private Image[] _activeRow;
     [SerializeField] private Image[] _unactiveRow;
 
+    [SerializeField] private AudioClip _victoryBGM;
     private CanvasGroup canvas;
 
     private void Start()
@@ -42,6 +43,11 @@ public class Gameover : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         InitSkillTree();
+
+        var bgm = GameObject.Find("BGM").GetComponent<AudioSource>();
+        bgm.Stop();
+        bgm.clip = _victoryBGM;
+        bgm.Play();
     }
 
     void InitSkillTree()

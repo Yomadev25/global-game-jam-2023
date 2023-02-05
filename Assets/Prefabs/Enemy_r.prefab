@@ -112,6 +112,7 @@ MonoBehaviour:
       m_Calls: []
   _mesh: {fileID: 7791110249603522792}
   _dieFx: {fileID: 9157105887711914197, guid: c4f829cb7dd4b864caf8832ec5b1ee55, type: 3}
+  _dmgSFX: {fileID: 187533030130245531, guid: 58474dcabe4d11e408b94da73d3aa4a6, type: 3}
 --- !u!114 &7463580526987498031
 MonoBehaviour:
   m_ObjectHideFlags: 0

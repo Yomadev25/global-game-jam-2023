@@ -26,6 +26,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator _leftAnim;
 
     [SerializeField] private ParticleSystem _slashEffect;
+    [SerializeField] private GameObject _slashFx;
 
     public enum Types { Ball, Wave, Wall }
     public List<Types> types = new List<Types>();
@@ -115,6 +116,9 @@ public class PlayerCombat : MonoBehaviour
     void Attack(string name)
     {
         _rightAnim.Play(name);
+        GameObject GO = Instantiate(_slashFx);
+        Destroy(GO, 2f);
+
         NormalAttack();
     }
 

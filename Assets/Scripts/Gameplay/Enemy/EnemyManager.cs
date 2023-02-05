@@ -23,6 +23,7 @@ public class EnemyManager : MonoBehaviour
     private List<Color> originalColor = new List<Color>();
 
     [SerializeField] private GameObject _dieFx;
+    [SerializeField] private GameObject _dmgSFX;
 
     void Start()
     {
@@ -57,6 +58,8 @@ public class EnemyManager : MonoBehaviour
         {
             _meshRenderer.materials[i].color = Color.red;
         }
+        GameObject GO = Instantiate(_dmgSFX);
+        Destroy(GO, 1);
 
         yield return new WaitForSeconds(0.1f);
 

@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private float _maxStamina;
     [SerializeField] private float _stamina;
+
+    [SerializeField] private GameObject _dmgSfx;
     public float Stamina => _stamina;
     public float MaxStamina => _maxStamina;
 
@@ -23,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     bool isDead;
 
     private void Awake()
-    {
+    {       
         MessagingCenter.Subscribe<GameManager>(this, GameManager.MessageGameStart, (sender) =>
         {
             PlayerActive();
@@ -80,6 +82,8 @@ public class PlayerManager : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _hp -= damage;
+        GameObject GO = Instantiate(_dmgSfx);
+        Destroy(GO, 1);
         UIManager.instance.DamageEffect();
     }
 

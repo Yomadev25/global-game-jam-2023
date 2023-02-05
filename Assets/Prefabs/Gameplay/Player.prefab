@@ -613,6 +613,8 @@ MonoBehaviour:
   _rightAnim: {fileID: 9100445829094718327}
   _leftAnim: {fileID: 9100445828849266423}
   _slashEffect: {fileID: 5372577420682996923}
+  _slashFx: {fileID: 8428950754275695467, guid: 24ed4cc0ddd92f3488301c07446f0c32,
+    type: 3}
   types: 
 --- !u!136 &185784269608981416
 CapsuleCollider:
