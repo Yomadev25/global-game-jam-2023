@@ -5461,6 +5461,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7099342362920023952, guid: d99f629bc2f85af4dbf94945b5339bad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7099342362920024044, guid: d99f629bc2f85af4dbf94945b5339bad,
         type: 3}
       propertyPath: m_Pivot.x
@@ -13998,7 +14003,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0.003
+  weight: 0.476
   sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
 --- !u!4 &1817589278
 Transform:

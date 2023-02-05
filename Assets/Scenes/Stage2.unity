@@ -2679,6 +2679,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7099342362920023952, guid: d99f629bc2f85af4dbf94945b5339bad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7099342362920024044, guid: d99f629bc2f85af4dbf94945b5339bad,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3732,7 +3737,7 @@ PrefabInstance:
     - target: {fileID: 2593794237157990113, guid: dc608039504b0d5469d1e708fc83db7e,
         type: 3}
       propertyPath: _sceneName
-      value: Stage3
+      value: Stage4
       objectReference: {fileID: 0}
     - target: {fileID: 2593794237157990113, guid: dc608039504b0d5469d1e708fc83db7e,
         type: 3}

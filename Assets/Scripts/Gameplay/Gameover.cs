@@ -30,17 +30,19 @@ public class Gameover : MonoBehaviour
     [SerializeField] private AudioClip _victoryBGM;
     private CanvasGroup canvas;
 
-    private void Start()
+    private IEnumerator Start()
     {
         canvas = GetComponent<CanvasGroup>();
-        canvas.blocksRaycasts = true;
-        canvas.interactable = true;
-        canvas.LeanAlpha(1, 2);
-
         var player = FindObjectOfType<FirstPersonController>();
         player.enabled = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        yield return new WaitForSeconds(1f);
+
+        canvas.blocksRaycasts = true;
+        canvas.interactable = true;
+        canvas.LeanAlpha(1, 1);
 
         InitSkillTree();
 
