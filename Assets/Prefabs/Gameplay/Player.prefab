@@ -604,9 +604,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _atk: 1
-  _skill1Key: 113
-  _skill2Key: 101
-  _skill3Key: 114
+  _skill1Key: 49
+  _skill2Key: 50
+  _skill3Key: 51
   _skill1cooldown: 0
   _skill2cooldown: 0
   _skill3cooldown: 0

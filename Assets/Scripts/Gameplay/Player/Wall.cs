@@ -42,6 +42,7 @@ public class Wall : MonoBehaviour
                     enemyManager.TakeStatus(EnemyManager.Status.Burn);
                     break;
                 case SkillManager.Elements.Thunder:
+                    enemyManager.TakeDamage(2f);
                     enemyManager.TakeStatus(EnemyManager.Status.Slow);
                     break;
             }
