@@ -145,12 +145,12 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _anim.SetBool("isAttack", true);       
         yield return new WaitForSeconds(1f);
-        foreach (Collider col in Physics.OverlapBox(_hitboxPos.position, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity))
+        foreach (Collider col in Physics.OverlapBox(_hitboxPos.position, new Vector3(0.8f, 0.8f, 0.8f), Quaternion.identity))
         {
             if (col.CompareTag("Player"))
             {
                 var playerManager = col.GetComponent<PlayerManager>();
-                playerManager.TakeDamage(1);
+                playerManager.TakeDamage(3);
             }
         }
         _anim.SetBool("isAttack", false);

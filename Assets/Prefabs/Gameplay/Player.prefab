@@ -662,10 +662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0ee0af5299cc64d838a5ae3f2c765c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 50
   _hp: 0
   _maxStamina: 20
   _stamina: 0
+  _dmgSfx: {fileID: 187533030130245531, guid: 58474dcabe4d11e408b94da73d3aa4a6, type: 3}
   isUseStamina: 0
 --- !u!1 &733137730562515796
 GameObject:
