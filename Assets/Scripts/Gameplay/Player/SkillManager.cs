@@ -51,6 +51,8 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private GameObject _earthWave;
     [SerializeField] private GameObject _earthWall;
 
+    private List<int> unactiveSkill = new List<int>();
+
     private void Awake()
     {
         if (instance == null)
@@ -135,6 +137,16 @@ public class SkillManager : MonoBehaviour
     public Sprite GetSkillSprite(int index)
     {
         return _skillSprites[index];
+    }
+
+    public void AddUnuseSkill(int index)
+    {
+        unactiveSkill.Add(index);
+    }
+
+    public List<int> GetUnactiveSkill()
+    {
+        return unactiveSkill;
     }
 }
 

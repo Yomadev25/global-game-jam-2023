@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     public bool isUseStamina;
 
     private FirstPersonController _firstPersonController;
+    bool isDead;
 
     private void Awake()
     {
@@ -83,6 +85,12 @@ public class PlayerManager : MonoBehaviour
 
     public void Gameover()
     {
+        if (isDead) return;
+        isDead = true;
 
+        Transition.Instance.FadeIn(() =>
+        {
+            SceneManager.LoadScene("MainMenu");
+        });
     }
 }

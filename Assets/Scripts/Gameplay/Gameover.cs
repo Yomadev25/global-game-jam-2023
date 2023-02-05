@@ -1,4 +1,5 @@
 using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,10 @@ public class Gameover : MonoBehaviour
     [SerializeField] private Image _earthWaveUI;
     [SerializeField] private Image _earthWallUI;
 
+    [Header("Row")]
+    [SerializeField] private Image[] _activeRow;
+    [SerializeField] private Image[] _unactiveRow;
+
     private CanvasGroup canvas;
 
     private void Start()
@@ -36,7 +41,37 @@ public class Gameover : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        ActiveSkillTree();
+        InitSkillTree();
+    }
+
+    void InitSkillTree()
+    {
+        int index = 0;
+        List<int> activeSkill = new List<int>();
+        List<int> unactiveSkill = new List<int>();
+
+        for (int i = 0; i < SkillManager.instance.GetSkillData().SkillUnlocks.Length; i++)
+        {
+            if (SkillManager.instance.GetSkillData().SkillUnlocks[i])
+            {
+                activeSkill.Add(i);
+            }
+            else
+            {
+                unactiveSkill.Add(i);
+            }
+        }
+
+        for (int i = 0; i < _activeRow.Length; i++)
+        {
+            _activeRow[i].sprite = SkillManager.instance.GetSkillSprite(activeSkill[i]);
+        }
+
+        for (int i = 0; i < _unactiveRow.Length; i++)
+        {
+            _unactiveRow[i].sprite = SkillManager.instance.GetSkillSprite(unactiveSkill[i]);
+            _unactiveRow[i].color = Color.gray;
+        }
     }
 
     public void ActiveSkillTree()

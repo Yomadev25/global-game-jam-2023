@@ -36,15 +36,18 @@ public class SkillRandom : MonoBehaviour
         }
         var skill1Image = _skill1UI.GetComponent<Image>();
         //Set sprite
+        skill1Image.sprite = SkillManager.instance.GetSkillSprite(skillRandom1);
         var skill1Button = _skill1UI.GetComponent<Button>();
         skill1Button.onClick.AddListener(() =>
         {
-            SelectSkill(index);
+            SelectSkill(skillRandom1);
         });
         
         while (true)
         {
             index = Random.Range(0, SkillManager.instance.GetSkillIndexLength());
+            if (index == skillRandom1)
+                continue;
 
             if (!SkillManager.instance.GetSkillIndexCheck(index))
             {
@@ -54,23 +57,29 @@ public class SkillRandom : MonoBehaviour
             yield return null;
         }
         var skill2Image = _skill2UI.GetComponent<Image>();
-        //Set sprite
+        skill2Image.sprite = SkillManager.instance.GetSkillSprite(skillRandom2);
         var skill2Button = _skill2UI.GetComponent<Button>();
         skill2Button.onClick.AddListener(() =>
         {
-            SelectSkill(index);
+            SelectSkill(skillRandom2);
         });
     }
 
     public void SelectSkill(int index)
     {
         skillSelect = index;       
-        GameManager.instance.GameStart();
+        GameManager.instance.GameStart();      
+
         this.gameObject.SetActive(false);
     }
 
     public void UnlockSkill()
     {
-        SkillManager.instance.GetSkillData().SkillUnlocks[skillSelect] = true;        
+        SkillManager.instance.GetSkillData().SkillUnlocks[skillSelect] = true;
+
+        if (skillSelect != skillRandom1)
+            SkillManager.instance.AddUnuseSkill(skillRandom1);
+        if (skillSelect != skillRandom2)
+            SkillManager.instance.AddUnuseSkill(skillRandom2);
     }
 }
